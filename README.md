@@ -44,3 +44,12 @@ Oppengeniers es un programa diseñado para analizar las vulnerabilidades de las 
 Para ejecutar un análisis de vulnerabilidades, utiliza el siguiente comando:
 ```bash
 python .\index.py
+```
+
+## Autores
+
+- Jhon Edison Garcia.
+- Sergio Velásquez.
+- Frank Acosta.
+- Andrés Castaño.
+- Geiner Martinez.
