@@ -1,0 +1,20 @@
+instalar libreria requests 
+py -m pip install requests - mysql-connector-python - reportlab
+
+
+
+
+{
+    "descripcion_https": "HTTPS description",
+    "cod_acceso": "Access code",
+    "descripcion_SSL": "SSL description",
+    "descripcion_url": "URL description",
+    "sql_i": "SQL injection details",
+    "xss": "XSS details",
+    "csrf": "CSRF details",
+    "listing": "Listing details",
+    "exposed": "Exposed details",
+    "libraries": "Libraries details"
+}
+
+py -m pip install  flask
