@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
-import subprocess
 import sqlite3
+from app import SecurityScanner
 
 app = Flask(__name__)
 DATABASE = 'bd_data.sqlite'
@@ -102,13 +102,18 @@ def handle_post_request():
     required_fields = [
         'url'
     ]
-    # Tu lógica para manejar la solicitud POST aquí
+    # Verificamos si se proporcionó la URL en los datos recibidos
+    if not all(field in data for field in required_fields):
+        return jsonify({'error': 'Missing required field(s)'}), 400
+
+    # Obtenemos la URL del cuerpo de la solicitud
     url_to_check = data['url']
-    try:
-        subprocess.run(['python', 'app.py', url_to_check], check=True)
-        return jsonify({'message': 'app.py executed successfully with the provided URL'}), 200
-    except subprocess.CalledProcessError as e:
-        return jsonify({'error': 'Failed to execute app.py', 'message': str(e)}), 500
+
+    # Instanciamos la clase SecurityScanner y llamamos al método run()
+    scanner = SecurityScanner()
+    scanner.run(url_to_check)
+
+    return jsonify({'message': 'Security scan executed successfully with the provided URL'}), 200
 
 
 if __name__ == '__main__':
