@@ -1,9 +1,9 @@
+import sys
 import sqlite3
 import requests
-from tabulate import tabulate
 from bs4 import BeautifulSoup, Comment
 
-url_to_check = 'https://en.wikipedia.org/'
+url_to_check = sys.argv[1] if len(sys.argv) > 1 else 'https://en.wikipedia.org/'
 url = url_to_check
 html = url_to_check   
 
