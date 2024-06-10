@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import sqlite3
 from app import SecurityScanner
 
 app = Flask(__name__)
 DATABASE = 'bd_data.sqlite'
+CORS(app)
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
