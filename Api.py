@@ -101,21 +101,16 @@ def delete_request(request_id):
 def handle_post_request():
     data = request.get_json()
 
-    required_fields = [
-        'url'
-    ]
-    # Verificamos si se proporcionó la URL en los datos recibidos
+    required_fields = ['url']
     if not all(field in data for field in required_fields):
         return jsonify({'error': 'Missing required field(s)'}), 400
 
-    # Obtenemos la URL del cuerpo de la solicitud
     url_to_check = data['url']
-
-    # Instanciamos la clase SecurityScanner y llamamos al método run()
     scanner = SecurityScanner()
-    scanner.run(url_to_check)
+    resultados = scanner.run(url_to_check)
 
-    return jsonify({'message': 'Security scan executed successfully with the provided URL'}), 200
+    return jsonify(resultados), 200
+
 
 
 if __name__ == '__main__':

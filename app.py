@@ -94,6 +94,7 @@ class SecurityScanner:
         return datos
 
     def run(self, url_to_check):
+        resultados = {}
         try:
             self.connection = sqlite3.connect(self.nombre_bd)
             self.create_table_if_not_exists()
@@ -151,14 +152,29 @@ class SecurityScanner:
                     libraries = "No se detectaron bibliotecas vulnerables."
                 descripcion_url = url
                 self.insert_request(descripcion_https, cod_acceso, descripcion_SSL, descripcion_url, sql_i, xss, csrf, listing, exposed, libraries)
+                resultados = {
+                    "descripcion_https": descripcion_https,
+                    "cod_acceso": cod_acceso,
+                    "descripcion_SSL": descripcion_SSL,
+                    "descripcion_url": descripcion_url,
+                    "sql_injection": sql_i,
+                    "xss": xss,
+                    "csrf": csrf,
+                    "directory_listing": listing,
+                    "exposed_version_info": exposed,
+                    "vulnerable_libraries": libraries
+                }
         except sqlite3.Error as e:
             print("Error al conectar a la base de datos:", e)
         finally:
             if self.connection:
                 self.connection.close()
                 print("Conexión cerrada.")
+        return resultados
 
+# Para pruebas manuales
 if __name__ == "__main__":
     url_to_check = input("Introduce la URL a verificar: ")
     scanner = SecurityScanner()
-    scanner.run(url_to_check)
+    resultados = scanner.run(url_to_check)
+    print(resultados)
