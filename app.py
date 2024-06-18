@@ -86,7 +86,7 @@ class SecurityScanner:
 
     def get_data_from_db(self):
         cursor = self.connection.cursor()
-        sql = "SELECT descripcion_https, cod_acceso, descripcion_SSL, descripcion_url, sql_i, xss, csrf FROM requests"
+        sql = "SELECT descripcion_https, cod_acceso, descripcion_SSL, descripcion_url, sql_i, xss, csrf, listing, exposed, libraries FROM requests"
         cursor.execute(sql)
         datos = cursor.fetchall()
         encabezados = ["descripcion_https", "cod_acceso", "descripcion_SSL", "descripcion_url", "sql_i", "xss", "csrf", "listing", "exposed", "libraries"]
@@ -111,45 +111,75 @@ class SecurityScanner:
             listing = ""
             exposed = ""
             libraries = ""
+            score = 100
+            recomendaciones = []
+
             if html:
                 if not url.startswith("https://"):
                     descripcion_https = "URL no utiliza HTTPS, lo cual puede ser inseguro."
+                    score -= 10
+                    recomendaciones.append("Utilice HTTPS para mejorar la seguridad de la comunicación.")
                 else:
                     descripcion_https = "URL utiliza HTTPS, lo cual es seguro."
+
                 response = requests.get(url)
                 if response.status_code == 200:
                     cod_acceso = "URL está accesible y devuelve un código 200 OK."
                 else:
                     cod_acceso = f"URL está accesible pero devuelve un código de estado: {response.status_code}"
+                    score -= 5
+                    recomendaciones.append(f"Revise por qué la URL devuelve un código de estado: {response.status_code}")
+
                 if response.url.startswith("https://"):
                     if response.history and not response.history[0].is_permanent_redirect:
                         descripcion_SSL = "El sitio tiene un certificado SSL válido."
                     else:
                         descripcion_SSL = "El sitio tiene un certificado SSL, pero puede ser inválido o caducado."
+                        score -= 10
+                        recomendaciones.append("Revise el certificado SSL y asegúrese de que sea válido y no esté caducado.")
+
                 if self.scan_for_sql_injection(html):
                     sql_i = "Se detectó una posible vulnerabilidad de inyección SQL."
+                    score -= 20
+                    recomendaciones.append("Implemente procedimientos para evitar inyección SQL, como usar consultas preparadas.")
                 else:
                     sql_i = "No se detectaron vulnerabilidades de inyección SQL."
+
                 if self.scan_for_xss(html):
                     xss = "Se detectaron posibles vulnerabilidades XSS."
+                    score -= 20
+                    recomendaciones.append("Utilice técnicas de sanitización para prevenir ataques XSS.")
                 else:
                     xss = "No se detectaron vulnerabilidades XSS."
+
                 if self.scan_for_csrf(html):
                     csrf = "Se detectaron posibles vulnerabilidades CSRF."
+                    score -= 15
+                    recomendaciones.append("Implemente tokens CSRF para protegerse contra este tipo de ataques.")
                 else:
                     csrf = "No se detectaron vulnerabilidades CSRF."
+
                 if self.check_directory_listing(html):
                     listing = "El listado de directorios está habilitado - posible vulnerabilidad."
+                    score -= 10
+                    recomendaciones.append("Desactive el listado de directorios en el servidor web.")
                 else:
                     listing = "El listado de directorios no está habilitado."
+
                 if self.check_exposed_version_info(html):
                     exposed = "Se expone información de versión - posible vulnerabilidad."
+                    score -= 10
+                    recomendaciones.append("Oculte la información de versión del servidor para evitar que sea utilizada por atacantes.")
                 else:
                     exposed = "No se expone información de versión."
+
                 if self.check_vulnerable_libraries(html):
                     libraries = "Se utilizan bibliotecas vulnerables - posible vulnerabilidad."
+                    score -= 20
+                    recomendaciones.append("Actualice las bibliotecas a sus versiones más recientes para mitigar vulnerabilidades conocidas.")
                 else:
                     libraries = "No se detectaron bibliotecas vulnerables."
+
                 descripcion_url = url
                 self.insert_request(descripcion_https, cod_acceso, descripcion_SSL, descripcion_url, sql_i, xss, csrf, listing, exposed, libraries)
                 resultados = {
@@ -162,7 +192,9 @@ class SecurityScanner:
                     "csrf": csrf,
                     "directory_listing": listing,
                     "exposed_version_info": exposed,
-                    "vulnerable_libraries": libraries
+                    "vulnerable_libraries": libraries,
+                    "score": score,
+                    "recomendaciones": recomendaciones
                 }
         except sqlite3.Error as e:
             print("Error al conectar a la base de datos:", e)
