@@ -84,7 +84,7 @@ export default function ScanForm() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               required
-              className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 w-full"
+              className="text-black rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 w-full"
             />
           </div>
           <button type="submit" className="relative inline-flex items-center justify-center px-4 py-2 overflow-hidden font-mono font-medium tracking-tighter text-white bg-blue-500 rounded-full group">
@@ -98,78 +98,69 @@ export default function ScanForm() {
 
       {scanCompleted && !isScanning && (
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-gray-800 p-6 rounded-md flex flex-col items-center">
-            <div className="w-20 h-20 bg-white rounded-full mb-4 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-medium text-white mb-2">Vulnerabilidades Generales</h3>
-            <button
-              onClick={handleToggleResults}
-              className="rounded-md bg-blue-500 py-2 px-4 text-white font-medium hover:bg-blue-700"
-            >
-              {showResults ? 'Ocultar' : 'Mostrar'}
-            </button>
-          </div>
-
-          <div className="bg-gray-800 p-6 rounded-md flex flex-col items-center">
-            <div className="w-20 h-20 bg-white rounded-full mb-4 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-medium text-white mb-2">Seguridad de Contraseñas</h3>
-            <button
-              onClick={handleShowPasswordSection}
-              className="rounded-md bg-blue-500 py-2 px-4 text-white font-medium hover:bg-blue-700"
-            >
-              {showPasswordSection ? 'Ocultar' : 'Mostrar'}
-            </button>
-          </div>
-
-          <div className="bg-gray-800 p-6 rounded-md flex flex-col items-center">
-            <div className="w-20 h-20 bg-white rounded-full mb-4 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-medium text-white mb-2">Seguridad de Cuentas Bancarias</h3>
-            <button
-              onClick={() => handleClickNotReady('El equipo está trabajando en este apartado, por ahora no está listo')}
-              className="rounded-md bg-blue-500 py-2 px-4 text-white font-medium hover:bg-blue-700"
-            >
-              Mostrar
-            </button>
-          </div>
-
-          <div className="bg-gray-800 p-6 rounded-md flex flex-col items-center">
-  <div className="w-20 h-20 bg-white rounded-full mb-4 flex items-center justify-center">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="w-10 h-10"
+  <div className="bg-gray-800 p-6 rounded-md flex flex-col items-center relative">
+    <div className="w-20 h-20 bg-white rounded-full mb-4 flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="w-10 h-10">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+      </svg>
+    </div>
+    <h3 className="text-lg font-medium text-white mb-8">Vulnerabilidades Generales</h3> {/* Cambié mb-2 a mb-6 */}
+    <button
+      onClick={handleToggleResults}
+      className="rounded-md bg-blue-500 py-2 px-4 text-white font-medium hover:bg-blue-700 absolute bottom-6"
     >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-      />
-    </svg>
+      {showResults ? 'Ocultar' : 'Mostrar'}
+    </button>
   </div>
-  <h3 className="text-lg font-medium text-white mb-2">Archivos Sensibles</h3>
-  <button
-    onClick={() => handleClickNotReady('El equipo está trabajando en este apartado, por ahora no está listo')}
-    className="rounded-md bg-blue-500 py-2 px-4 text-white font-medium hover:bg-blue-700"
-  >
-    Mostrar
-  </button>
+
+  <div className="bg-gray-800 p-6 rounded-md flex flex-col items-center relative">
+    <div className="w-20 h-20 bg-white rounded-full mb-4 flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="w-12 h-12">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z" />
+      </svg>
+    </div>
+    <h3 className="text-lg font-medium text-white mb-6">Seguridad de Contraseñas</h3> {/* Cambié mb-2 a mb-6 */}
+    <button
+      onClick={handleShowPasswordSection}
+      className="rounded-md bg-blue-500 py-2 px-4 text-white font-medium hover:bg-blue-700 absolute bottom-6"
+    >
+      {showPasswordSection ? 'Ocultar' : 'Mostrar'}
+    </button>
+  </div>
+
+  <div className="bg-gray-800 p-6 rounded-md flex flex-col items-center relative">
+    <div className="w-20 h-20 bg-white rounded-full mb-4 flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="w-12 h-12">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+      </svg>
+    </div>
+    <h3 className="text-lg font-medium text-white mb-10">Seguridad Cuentas Bancarias</h3> {/* Cambié mb-2 a mb-6 */}
+    <button
+      onClick={() => handleClickNotReady('El equipo está trabajando en este apartado, por ahora no está listo')}
+      className="rounded-md bg-blue-500 py-2 px-4 text-white font-medium hover:bg-blue-700 absolute bottom-6"
+    >
+      Mostrar
+    </button>
+  </div>
+
+  <div className="bg-gray-800 p-6 rounded-md flex flex-col items-center relative">
+    <div className="w-20 h-20 bg-white rounded-full mb-4 flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="w-10 h-10">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+      </svg>
+    </div>
+    <h3 className="text-lg font-medium text-white mb-6">Archivos Sensibles</h3> {/* Cambié mb-2 a mb-6 */}
+    <button
+      onClick={() => handleClickNotReady('El equipo está trabajando en este apartado, por ahora no está listo')}
+      className="rounded-md bg-blue-500 py-2 px-4 text-white font-medium hover:bg-blue-700 absolute bottom-6"
+    >
+      Mostrar
+    </button>
+  </div>
 </div>
 
-        </div>
+
+
       )}
 
       {showPasswordSection && (
@@ -239,10 +230,7 @@ export default function ScanForm() {
           <td className="px-4 py-2 font-medium text-gray-300">Vulnerable Libraries:</td>
           <td className="px-4 py-2 text-gray-400">{resultados.vulnerable_libraries ? 'Yes' : 'No'}</td>
         </tr>
-        <tr className="border-b border-gray-600 bg-gray-800">
-          <td className="px-4 py-2 font-medium text-gray-300">ID:</td>
-          <td className="px-4 py-2 text-gray-400">{resultados.id}</td>
-        </tr>
+  
         <tr>
           <td className="px-4 py-2 font-medium text-gray-300">Descripción URL:</td>
           <td className="px-4 py-2 text-gray-400">{resultados.descripcion_url}</td>
