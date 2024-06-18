@@ -156,3 +156,27 @@ El propósito de esta herramienta es proporcionar a los desarrolladores y admini
 ### Seguridad de Contraseñas:
 
 1. En el apartado "Seguridad de Contraseñas", puedes validar la seguridad de tus contraseñas, recibiendo retroalimentación sobre los estándares mínimos de seguridad.
+
+
+## Ejemplos del Funcionamiento del Programa
+
+### Realizar un Análisis
+
+1. Después de iniciar sesión en la aplicación web, presiona el botón **"Comienza Ahora"**.
+2. Ingresa la URL que deseas analizar en el campo proporcionado.
+3. Presiona el botón **"Scanear"**.
+
+```sh
+# Ejemplo de entrada
+URL: http://example.com
+
+# Ejemplo de salida en la interfaz
+Escaneando URL: http://example.com...
+Vulnerabilidades Generales:
+- Inyección SQL: No se detectaron vulnerabilidades.
+- XSS: Se detectaron posibles vulnerabilidades XSS.
+- CSRF: No se detectaron vulnerabilidades.
+- Listado de Directorios: El listado de directorios está habilitado - posible vulnerabilidad.
+- Información de Versión Expuesta: No se expone información de versión.
+- Bibliotecas Vulnerables: Se utilizan bibliotecas vulnerables - posible vulnerabilidad.
+
